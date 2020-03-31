@@ -1,6 +1,9 @@
 ## Load Balancing이란?
 부하 분산을 위해 가상 IP를 통해 클러스터링 된 서버에 트래픽을 분배하는 기능
 
+> Load Balancing (로드 밸런싱)  
+    부하를 분산하여 특정 루틴(Routine, 경로)에 과부하를 줄여주고 처리를 분산하여 효율을 높이는 방식을 말한다. ex) 여러 개의 서버 운용, 멀티 프로세서
+
 ### Load Balancing의 종류
 - L2
     - **Mac주소**를 바탕으로 Load Balancing 진행
@@ -16,11 +19,15 @@
     ![load_balancing2](https://user-images.githubusercontent.com/37951612/77849519-250a7000-7207-11ea-96b4-d96781c54b31.png)
 
 ### HTTP
-- X-Forwarded-For : HTTP or HTTPS 로드 밸런서를 사용할 때 **클라이언트의 IP 주소를 식별**하는 데 도움을 준다.
-- X-Forwarded-Proto : 클라이언트가 로드 밸런서 연결에 사용한 **프로토콜(HTTP or HTTPS)을 식별**하는 데 도움을 준다.
-- X-Forwarded-Port : 클라이언트가 로드 밸런서 연결에 사용한 **포트**를 식별하는 데 도움을 준다.
+- `X-Forwarded-For` : HTTP or HTTPS 로드 밸런서를 사용할 때 **클라이언트의 IP 주소를 식별**하는 데 도움을 준다.
+- `X-Forwarded-Proto` : 클라이언트가 로드 밸런서 연결에 사용한 **프로토콜(HTTP or HTTPS)을 식별**하는 데 도움을 준다.
+- `X-Forwarded-Port` : 클라이언트가 로드 밸런서 연결에 사용한 **포트**를 식별하는 데 도움을 준다.
 
 ### 장애 대비 & Fail Over
+
+> Fault Tolerant (폴트 톨러런트)  
+    시스템에 어떠한 문제가 발생할 경우를 대비하여 장애 대비책을 세워두는 것을 말한다. 장비를 이중 구조로 디자인하는 등, 보조 및 및 보완을 통해 장애를 대비하는 방식을 말한다.
+
 기본적으로 서버의 이중화 구성 ⇒ Load Balancer 두 개 구성  
 
 이중화된 Load Balancer들은 **서로 Health Check**를 하는데, 
