@@ -6,7 +6,12 @@
 - 흐름 제어: 송신하는 곳에서 감당이 안 될 정도로 많은 데이터를 빠르게 보내서 수신하는 곳에서 문제가 일어나는 것을 막는다
 - 혼잡 제어: 네트워크 내의 패킷 수가 과도하게 증가하는 것을 방지한다
 
+![image](https://user-images.githubusercontent.com/37951612/78031748-ead3d680-739e-11ea-8d14-e3ec47d8e978.png)
+
 ## 3 way handshaking (연결 과정)
+
+![image](https://user-images.githubusercontent.com/37951612/78031583-b3fdc080-739e-11ea-9327-5efee3284daf.png)
+
 `SYN, SYN/ACK, ACK`  
 Client와 Server 또는 P2P Socket 통신 등 네트워크를 사용한 통신 시 TCP 통신을 많이 사용한다. TCP 통신을 위한 네트워크 연결은 **3 way handshake** 방식으로 연결된다.  
 쉽게 얘기하면, 서로의 통신을 위한 port를 확인하고 연결하기 위해 3번의 요청/응답 후 연결되는 것이다.
@@ -24,8 +29,16 @@ Client와 Server 또는 P2P Socket 통신 등 네트워크를 사용한 통신 �
 - `ESTABLISHED`: 서로의 포트가 연결된 상태
 
 ## 2 way data transmission
+1. Client가 Server에 데이터를 보낸다
+2. Server가 잘 받았다며 Client에게 `ACK`을 전송한다.
+
+> TCP 프로토콜은 데이터 전송 시 ACK 패킷을 통해 흐름제어(Flow Control)를 한다.  
+흐름제어(Flow Control): 송신 측과 수신 측의 데이터 처리속도 차이를 해결하기 위한 방법이다. 수신측에서 처리할 수 있는 데이터의 양보다 송신측에서 보내는 데이터의 양이 많으면 처리할 수 없으므로 수신측이 `ACK` 패킷을 통해 처리할 수 있는 양을 Client 측에 알리고, Client는 Server가 처리할 수 있는 데이터만 전송하게 된다.
 
 ## 4 way handshaking (종료 과정)
+
+![image](https://user-images.githubusercontent.com/37951612/78031732-e6a7b900-739e-11ea-879a-eb8552f269b4.png)
+
 TCP **연결**을 위해 **3 way handshake**를 통해 `ESTABLISHED`하고, 종료할 때에는 **4 way handshake** 를 수행한다. 아무래도 새로 연결을 하는 것보다 연결을 종료할 때 예기치 못한 상황이 발생할 가능성이 많기 때문에, 확인 과정이 더 까다로운 것 같다.
 
 1. (서로 통신하는 상태 `ESTABLISHED`)
