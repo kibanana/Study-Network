@@ -63,7 +63,7 @@
 - **데이터 링크 계층(Data Link layer)**
 
   스위치(Switch), 브릿지(Bridge)  
-  `HDLC, PPP, Frame-Relay, FDDI, ATM`
+  `HDLC, PPP, Frame-Relay, FDDI, ATM`  
   자료 단위: 프레임(Frame, 비트 단위의 논리 자료)  
   - **물리적인 전송 링크를 통해 자료를 안전하게 전송하는 계층**  
   - 물리 주소인 `MAC 주소`를 사용하여 인접한 시스템까지 자료를 안전하게 전송하여 최종 목적지까지 전송되도록 해준다.  
