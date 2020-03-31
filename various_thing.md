@@ -1,3 +1,35 @@
+## 유니캐스트
+<img src="https://user-images.githubusercontent.com/37951612/78056938-de607580-73c0-11ea-8d45-1327e0110cbd.png" width="300" height="200">
+
+**1:1로 데이터를 전달하는 통신 방식**
+
+1. Source의 MAC Address를 적고, Destination의 MAC Address도 적고 프레임에 감싸서 데이터를 전달한다.
+2. 로컬 네트워크 환경은 일반적으로 Shared한 통신 방식을 취하기 때문에, 일단 같은 네트워크 서식지의 모든 PC는 프레임을 받는다.
+3. 각각의 PC는 Source의 MAC Address와 자신의 LAN카드 MAC Address를 비교하여 만약 서로 다르다면 프레임을 CPU에 보내지 않고 폐기처분한다. 만약 MAC Address가 같다면, PC는 CPU 위에 프레임을 올린다.
+
+## 브로드캐스트
+<img src="https://user-images.githubusercontent.com/37951612/78056944-e0c2cf80-73c0-11ea-88ee-4c1e8c415cb3.png" width="300" height="200">
+
+**같은 네트워크 서식지에 있는 모든 PC에 데이터를 주는 방식**  
+즉, 패킷이나 프레임을 받는 PC의 MAC Address가 실제 프레임에 적힌 MAC Address와 일치하지 않아도 폐기하지 않고, CPU에 Interrupt를 건 후 우선적으로 받은 패킷을 처리하게 한다. 즉, 자신의 LAN카드 MAC Address와 일치하지 않는 패킷을 받더라도 PC는 CPU에게 그 패킷을 처리하게 시킨다(모든 프레임을 다 CPU에 올리기 때문에 PC 성능이 떨어진다).  
+따라서 너무 많은 브로드캐스트는 같은 서식지의 네트워크에 많은 노드를 발생시켜 혼잡을 야기하며, 그 안에 거주하는 PC의 성능을 저하시킬 수 있다.
+
+> 앞의 글만 읽어봐서는 단점이 많아보이는데, 왜 브로드캐스트를 이용할까?  
+  만약 Destination PC의 MAC Address는 모르고 IP 주소만 알고있을 때, Destination PC의 MAC Address를 알기 위해 브로드캐스트를 알린다. 즉, 네트워크 안에서 **"여기 이런 IP주소 가진 PC 있으면 알려줘!"** 라고 외친다. 그럼 해당 PC의 MAC Address를 전달받을 수 있다.  
+  IP 주소를 MAC 주소로 바꾸는 과정, 얻어내는 과정을 **ARP(Address Resolution Protocol)**이라고 하며, 그 외에도 서버가 다수의 클라이언트에게 서비스하기 위해 브로드캐스트를 사용하기도 한다.
+
+## 멀티캐스트
+<img src="https://user-images.githubusercontent.com/37951612/78057046-0ea81400-73c1-11ea-9298-54d41ba9cb70.png" width="300" height="200">
+
+ex) 사용자 200명 있는 네트워크에서 150명에게만 데이터를 주고 싶을 때
+
+**특정 그룹에게 데이터를 보내는 방식**
+
+유니캐스트로 150명에게 각각 150번 보낼 수 있고, 브로드캐스트로 모든 사용자에게 데이터를 보낼 수도 있겠지만, 모두 서버 오버헤드가 커지는 방법이다. 따라서 멀티캐스트를 사용해야 하며, 멀티캐스트는 라우터와 스위치가 멀티캐스트 지원을 해줘야 가능하다(지원 안하면 브로드캐스트 방식처럼 작동한다 => 라우터는 브로드캐스트를 막고, 스위치는 모든 포트에 데이터를 뿌린다).  
+
+D Class 주소 체계에서만 유효하고 라우터 및 스위치가 멀티캐스트를 지원해야만 사용할 수 있는 것이 단점이다.
+
+
 # NAT & NAPT
 사설 IP(Private IP)를 공인 IP(Public IP)로 변환하는 기술이다
 
