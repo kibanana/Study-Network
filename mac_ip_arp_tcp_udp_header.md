@@ -1,6 +1,6 @@
 ## Mac 헤더
 
-**MAC(Media Access Control Address) 주소**는 데이터 링크 계층에서의 네트워크 세그먼트 통신을 위한 네트워크 인터페이스에 할당된 **고유 식별자**다.
+**MAC 주소(Media Access Control Address**는 데이터 링크 계층에서의 네트워크 세그먼트 통신을 위한 네트워크 인터페이스에 할당된 **고유 식별자**다.
 
 ![image](https://user-images.githubusercontent.com/37951612/77874699-c2f24f00-7288-11ea-8fda-2180061a170c.png)
 
@@ -127,7 +127,7 @@
 
 - Flags (8bit)
 
-  6개의 서로 다른 제어 비트 또는 플래그를 나타낸다. 동시에 여러 개의 비트가 1로 설정될 수 있다.
+  8개의 서로 다른 제어 비트 또는 플래그를 나타낸다. 동시에 여러 개의 비트가 1로 설정될 수 있다.
 
   - CWR(Congestion Window Reduced): 혼잡 윈도우 크기 감소
 
@@ -135,15 +135,15 @@
 
   - URG(Urgent) : Urgent Pointer 필드가 가리키는 세그먼트 번호까지 긴급 데이터를 포함되어 있다는 것을 뜻한다. 이 플래그가 설정되지 않았다면 Uregent Pointer 필드는 무시되어야 한다.
 
-  - ACK(Acknowledgment) : 확인 응답 메시지
+  - `ACK`(Acknowledgment) : 확인 응답 메시지
 
   - PSH(Push) : 데이터를 포함한다는 것을 뜻한다.
 
   - RST(Reset) : 수신 거부를 하고자 할때 사용
 
-  - SYN(Synchronize) : 가상 회선이 처음 개설될 때 두 시스템의 TCP 소프트웨어는 의미 있는 확인 메시지를 전송하기 위해 일련 번호를 서로 동기화해야 한다.
+  - `SYN`(Synchronize) : 가상 회선이 처음 개설될 때 두 시스템의 TCP 소프트웨어는 의미 있는 확인 메시지를 전송하기 위해 일련 번호를 서로 동기화해야 한다.
 
-  - FIN(Finish) : 작업이 끝나고 가상 회선을 종결하고자 할 때 사용
+  - `FIN`(Finish) : 작업이 끝나고 가상 회선을 종결하고자 할 때 사용
 
 - Window size (16bit)
 

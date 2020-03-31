@@ -31,10 +31,9 @@
   
 - **표현 계층(Presentation Layer)**
   
-  **네트워크 통신을 하는 시스템 사이의 데이터 표현 차이를 해결(=> 호환)하기 위해 
-  - 자료의 형식(format)을 변환하거나, 공통의 형식(format)을 제공하는 계층**  
+  **네트워크 통신을 하는 시스템 사이의 데이터 표현 차이를 해결(=> 호환)하기 위해 자료의 형식(format)을 변환하거나, 공통의 형식(format)을 제공하는 계층**  
   - 인코딩(언어 코드 형식, ex. `ASCII, BCD, EBCDIC`) 변환, 그래픽, 영상 정보 등 호환을 위해 `JPEG`, `MPEG`, `TIFF`, `GIF`(그래픽 포맷), `QUICKTIME`(동영상 포맷), `MIDI`(음악 포맷), `RTF`, `ASCII`, `EBCDIC`(텍스트 포맷) 등으로 변환,
-  네트워크 보안을 위한 **암호화(Encryption) 전송**, **복호화(Decryption) 수신** 등 **데이터의 압축(Compression)과 해제**
+  네트워크 보안을 위한 **암호화(Encryption) 전송**, **복호화(Decryption) 수신** 등 **데이터의 압축(Compression)과 해제(Decompression)**
 
 - **세션 계층(Session Layer)**
 
