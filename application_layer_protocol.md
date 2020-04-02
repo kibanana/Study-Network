@@ -172,7 +172,9 @@ Active mode에서 Server가 Client에 접속을 시도하기 때문에 **Client 
 
 
 ## DHCP (Dynamic Host Configuration Protocol)
+인터넷을 사용할 때 이용하는 인터넷 주소는 IP이며, 이 IP 주소는 한정적이기 때문에 무한한 자원이 아니다. 따라서 **현재 통신을 하지 않는 PC로부터 IP를 회수하고 IP를 요청하는 PC에 현재 사용할 수 있는 IP를 동적으로 할당**해준다.
 
+![image](https://user-images.githubusercontent.com/37951612/78268464-2dceaf00-7543-11ea-8264-c90f7484f403.png)
 
 ## SMTP (Simple Mail Transfer Protocol) & POP3 (Post Office Protocol 3)
 **SMTP 서버는 메일 서비스를 제공하는 서버**다. **메일을 수신하는 서버는 POP3 서버**다.
