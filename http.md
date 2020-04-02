@@ -1,6 +1,215 @@
-[link](https://www.zerocho.com/category/HTTP)
+
 
 # HTTP (Hyper Text Transfer Protocol)
+
+[link](https://www.zerocho.com/category/HTTP)
+
+## HTTP란?
+Hyper Text Transfer Protocol의 약자로, 인터넷에서 데이터를 주고받을 수 있는 프로토콜(= 규칙)이다. 
+모든 프로그램이 이 규칙을 지키도록 개발하면 서로 정보를 교환할 수 있게 된다.
+
+주로 웹 개발자가 HTTP를 사용하며, HTTP는 에러를 해결하는 데에도 중요한다.
+
+![image](https://user-images.githubusercontent.com/37951612/78293889-4bf8d700-7564-11ea-83be-b86da376cc08.png)
+
+> 서버의 역할: 요청에 대한 응답을 보내주는 것
+
+### 요청 (Request)
+클라이언트가 요청한 정보를 받은 서버는 클라이언트가 원하는 것을 파악하고, 응답에 대한 정보를 담아서 클라이언트에 보낸다. 이런 정보가 담긴 메시지를 **HTTP 메시지**라고 한다. **HTTP 메시지는 시작줄, 헤더, 본문으로 구성된다.**
+
+```
+GET https://www.naver.com HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) ...
+Upgrade-Insecure-Requests: 1
+```
+
+- 시작줄: 첫 줄. `GET`- HTTP **메서드(Method)**, `https://www.naver.com`- **주소**, `HTTP/1.1`- **HTTP 버전**
+- 헤더: 두 번째 줄부터 시작. 요청에 대한 정보를 담고 있으며 헤더의 종류는 매우 많다.
+- 본문: 헤더에서 한 줄 띄고 본문 시작. 요청을 할 때 필요한 데이터를 담는 부분이다. HTTP Method가 `GET`, `DELETE`일 경우 해당 값은 비어있다.
+
+### 응답 (Response)
+
+```
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Length: 35653
+Content-Type: text/html;
+
+<!DOCTYPE html><html><head> ···
+```
+
+요청과 마찬가지로 **HTTP 메시지는 시작줄, 헤더, 본문으로 구성된다.**
+
+- 시작줄: 첫줄. `HTTP/1.1`- HTTP 버전, `200`- HTTP 상태코드(Status Code), `OK`- HTTP 상태메시지
+- 헤더: 두번째 줄부터 시작. 응답에 대한 정보를 담고 있다.
+- 본문: 응답에는 보통 본문이 있으며, 요청한 데이터가 여기에 담긴다.
+
+## HTTP 메서드(Method)
+
+`GET, POST, PUT, PATCH, DELETE`를 주로 사용하며, `OPTIONS, HEAD, CONNECT, TRACE` 라는 HTTP 메서드도 있다.
+
+해당 URL에 대한 어떤 동작을 하려고 할 때 알맞은 HTTP 메서드를 사용하여 요청하면 된다. 
+하지만 요청만 보낸다고 모든 요청이 정상적으로 처리되는 것은 아니고, 서버가 요청을 검증해서 유효하면 실행된다.
+
+`GET, DELETE`를 제외한 `POST, PUT, PATCH`는 요청을 보낼 때 본문을 같이 보낼 수 있다. 
+사실 `GET, DELETE`에도 본문을 넣어 보내는 것이 가능하지만 이에 대한 처리 정의가 없다(서버가 본문을 무시하는 것 권장).
+
+만약 요청에 필요한 데이터를 본문에 담는다면 서버는 이 본문을 받아서 파싱(해석)한 후 사용하게 된다. 
+만약 GET에도 꼭 데이터를 담아 보내고 싶다면 URL 뒤에 `?<key>=<value>` 쿼리스트링 형식으로 데이터를 보내면 된다.
+
+- HEAD
+
+  **GET** 요청에서 헤더만 가져올 때 사용된다.
+
+- `OPTIONS`
+
+  서버가 어떤 메서드를 지원하는지 알아볼 때 사용된다.
+  
+  요청 URL에 따라 `GET, HEAD`가 올 수도, `GET, HEAD, POST`가 올 수도 있다. 해당 URL에서 지원하는 메서드를 응답한다.
+  
+  CORS 상황에서는 다른 도메인 서버에 먼저 OPTIONS 요청을 날리고 그 서버가 요청을 허용하면 실제 요청을 날린다. 
+  `OPIONS` 요청은 서버에 실제 요청을 보내기 전 서버를 테스트하는 용도라고 생각할 수 있다.
+
+- TRACE
+
+  ex) 핑퐁 테스트
+
+- CONNECT
+
+  ex) 양방향 통신
+
+
+## HTTP 공통 & 요청 헤더
+
+### 공통 헤더 (요청, 응답에 사용)
+
+- `Date`
+
+  HTTP 메시지가 자동으로 만든 시각
+
+- `Connection`
+
+  기본값은 `keep-alive`로, 사실상 아무 의미도 없다. HTTP/2 에서는 아예 사라졌다.
+
+- `Cache-Control`: ↓
+- **`Content-Length`**
+
+  요청과 응답 메시지의 본문 크기를 byte 단위로 표시해준다. 메시지 크기에 따라 자동으로 만들어진다.
+
+- `Content-Type`
+
+  `Content-Type: text/html; charset=utf-8` => 현재 메시지 내용이 `text/html` 타입이며, `utf-8` 문자열이다
+  
+  Content의 타입, 문자열 인코딩을 명시할 수 있다. **`Accept, Accept-Charset` 헤더와 대응**된다.
+
+- `Content-Language`
+
+  사용자 언어를 뜻한다. 
+  
+  ex) 한국인에게 영어를 가르치는 사이트라면, 페이지 언어는 영어더라도 `Content-Language`가 `ko-KR`일 수 있다.
+
+- `Content-Encoding`
+
+  `Content-Encoding: gzip, deflate`
+  
+  Content가 압축된 방식을 뜻한다. 응답 컨텐츠를 해당 알고리즘들로 압축해서 보내면 브라우저가 해제해서 사용한다.
+  
+  Content 용량이 줄어들기 때문에 요청이나 응답 전송 속도도 빨라지고, 데이터 소모량이 줄어든다.
+  
+### 요청 헤더
+
+- `Host`
+
+  `Host: www.naver.com`
+
+  서버의 도메인 네임(포트 포함). 반드시 한 개가 존재해야 한다.
+
+- **`User-Agent`**
+
+  현재 사용자가 어떤 클라이언트를 이용하여 요청했는지에 대한 정보(OS, Browser)를 볼 수 있다.
+  
+  
+  헤더는 변경할 수 있기 때문에 완전히 신뢰할 수는 없지만, 대부분의 사람이 User-Agent 헤더를 조작하지 않고 그대로 보내기 때문에 이를 활용하여 접속자 통계 등을 내곤 한다. 또는 사용할 수 있는 브라우저가 정해진 경우 'IE는 지원하지 않습니다. Chrome으로 접속해주세요' 같은 메시지를 보내기도 한다.
+
+- **`Accept`**
+
+  요청을 보낼 때 서버에 특정 타입(MIME)의 데이터를 보내줬다고 명시하는 역할을 한다.
+  
+  `Accept: text/html` => HTML 형식인 응답을 처리하겠다는 뜻이다
+  
+  `,`(콤마, comma)를 이용하여 여러 타입을 동시에 명시할 수 있고, 
+  `*`(와일드카드, wildcard)를 `text/*`처럼 이용하여 'text 이기만 하면 subtype은 상관없어'라고 알릴 수도 있다.
+  
+  요청 헤더의 `Accept` 시리즈는 공통 헤더의 `Content` 시리즈와 대응된다.  
+  ex) `Accept-Encoding`, `Accept-Charset`, `Accept-Language`  
+  `Accept` 헤더에 뭘 적어야할지 모르겠다면 그냥 `*`를 적거나, 브라우저가 알아서 설정하는 `Accept`를 사용하면 된다.
+
+- `Authorization`
+  
+  인증 토큰을 서버로 보낼 때 사용하는 헤더로, API 요청 등을 할 때 인증을 위한 토큰을 담기 위해 사용한다.
+  
+  `Authorization: Bearer <token>` 등의 형태로 먼저 토큰의 종류(ex. Basic, Bearer)를 알리고 실제 토큰을 적는다.
+  
+- `Origin`
+
+  POST 같은 요청에서 요청이 어느 주소에서 시작되었는지를 나타낸다. 만약 요청을 보낸 주소, 받는 주소가 다르면 **CORS** 문제가 발생하기도 한다.
+
+- `Referer`
+
+  이 페이지 이전의 주소가 담겨있다. 주로 애널리스틱(분석) 용도로 사용한다. 사실 Referrer의 오타다.
+
+
+## HTTP 응답 헤더
+
+### `Access-Control-Allow-Origin`
+프론트엔드 개발자가 작성한 요청을 보내는 프론트 주소와 그 요청을 받는 백엔드 주소가 다르면 **CORS(Protocol, Sub Domain, Domain, Port 중 하나만 달라도)** 에러가 발생한다. 이 때 서버에서 응답 메시지 헤더에 적절한 값을 명시해주어야 한다. 일일이 지정하기 귀찮다면 `*`(와일드카드)를 사용할 수 있지만, 그만큼 보안이 취약해진다.
+
+**CORS** 요청 시에는 미리 `OPTIONS`로 서버가 CORS를 허용하는지 물어본다. 이 때 아래 헤더들도 적절히 소통한다. `~Request~` 헤더들은 `~Allow~` 헤더에 대응된다. 두 헤더가 대응되면 CORS 요청&응답이 이루어지는 것이다.
+
+### `Access-Control-Request-Method`, `Access-Control-Request-Headers`
+요청 헤더에서 사용된다
+
+### `Access-Control-Allow-Methods`, `Access-Control-Allow-Headers`
+응답 헤더에서 사용된다
+
+### `Allow`
+`Access-Control-Allow-Methods`와 비슷하지만 CORS 요청 이외에도 적용된다. 이 헤더에 작성된 규칙을 위반하면 `405 Method Not Allowed` 에러를 응답한다.
+
+만약 동일 주소에 대해 `GET` 요청은 되고 `POST` 요청은 안된다면 에러를 응답하면서 헤더로 `Allow: GET`을 보내면 된다.
+
+### `Content-Disposition`
+응답 본문을 브라우저가 어떻게 표시해야할지 알려준다.
+- `inline`: 웹페이지 화면에 표시
+- `attachment`: 다운로드 되기를 원하는 파일에 설정. `; filename='clean.csv'` 형태로 파일명까지 지정할 수 있다.
+
+### `Location`
+HTTP 응답 메시지의 상태코드가 `201`이나 `300번대`일 때, 어느 페이지로 이동해야하는지 알려주는 헤더다. `Location` 헤더의 값으로 리다이렉트한다.
+
+### [`Content-Security-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+외부 파일을 불러오는 경우, 차단할 소스와 불러올 소스를 명시할 수 있는 헤더다.  
+만약 악성코드가 담긴 파일을 불러온다면? XSS 공격 등을 당할 수도 있다.
+
+```
+Content-Security-Policy: default-src 'self'
+Content-Security-Policy: default-src https:
+Content-Security-Policy: default-src 'none'
+```
+
+- default-src : 모든 외부 소스에 적용되며, 각각 따로 지정할 수도 있다. 
+- self : 자신의 도메인 내의 파일만 가져올 수 있다.
+- https : HTTPS를 통해서만 파일을 가져올 수 있다.
+- none : 파일을 가져올 수 없다.
+
+`font-src, script-src, img-src, style-src, object-src` 등이 있고, 소스 옵션으로는 도메인이나, `https:`, `unsafe-inline`(인라인 태그 허용), `unsafe-eval`(eval 함수 허용) 등이 있습니다.
+
+## HTTP 쿠키 & 캐시 헤더
+
+
+## HTTP X 헤더
+
+
+---
 
 ## Media Type ([MDN](https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/MIME_types))
 
