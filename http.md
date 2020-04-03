@@ -204,7 +204,70 @@ Content-Security-Policy: default-src 'none'
 `font-src, script-src, img-src, style-src, object-src` 등이 있고, 소스 옵션으로는 도메인이나, `https:`, `unsafe-inline`(인라인 태그 허용), `unsafe-eval`(eval 함수 허용) 등이 있습니다.
 
 ## HTTP 쿠키 & 캐시 헤더
+웹 자원을 효율적으로 사용하기 위해서는 캐싱을 잘 활용해야 한다. 클라이언트가 똑같은 데이터를 요청할때마다 서버에서 응답해주는 건 낭비이기 때문이다. 쿠키는 클라이언트와 서버가 데이터를 주고받는 가장 간단한 방법 중 하나다. 
 
+캐싱과 쿠키에 대한 설정을 HTTP 헤더를 설정함으로써 할 수 있고, **개발자 도구 - Application 탭** 에서 쉽게 확인할 수 있다.
+
+### 캐시
+CDN 같은 공유 캐시가 아니라, **개인 캐시**를 뜻한다. 보통 캐싱은 GET 요청에만 한다. **GET 요청으로 '가져온' **데이터를 저장해두고 쓰는 것**이다. 일반적으로 `200`, `301`, `404` 상태 코드를 가진 응답을 캐싱할 수 있다.
+
+### `Cache-Control`
+
+- `Cache-Control: no-store`: 아무것도 캐싱하지 않는다.
+- `Cache-Control: no-cache`: **Cache**하지 말라는 뜻이 아니다. 모든 캐시를 쓰기 전에 서버에 이 캐시를 써도 되는지 물어보라는 뜻이다.
+- `Cache-Control: must-revalidate`: 만료된 캐시만 서버에 확인을 받도록 한다.
+- `Cache-Control: public`: 공유 캐시(또는 중계서버)에 저장해도 된다.
+- `Cache-Control: private`: 브라우저 같은 특정 사용자 환경에만 캐시를 저장해야 한다.
+- `Cache-Control: public, max-age=3600`: 캐시 유효시간으로 지정한다. 초(seconds) 단위로, 3600초는 1시간이다. 시간이 지나면 이 응답 캐시는 만료된 것으로 생각한다.
+
+위의 옵션들은 혼합해서 쓸 수 있으며 `,`(comma)로 옵션들을 구분한다. 
+
+응답 헤더 뿐만 아니라 요청 헤더로도 사용된다. **Client - 중계 서버 - Server** 같은 구조면 중계 ㅓㅅ버에 있는 캐시를 가져오기 않기 위해 요청부터 `Cache-Control` 헤더를 넣을 수 있다.
+
+### `Age`
+캐시 응답 시 나타난다. `max-age` 내에서 얼마나 시간이 흘렀는지 초(seconds) 단위로 알려준다. 만약 `Cache-Control: public, max-age=3600`을 설정하고 1분이 지나면 `Age: 60`을 캐시 응답 헤더에 포함한다.
+
+### `Expires`
+
+`Expires: Thu, 26 Jul 2018 07:28:00 GMT`
+
+`Cache-Control`에 `max-age`가 있는 경우 이 헤더는 무시되며, `Cache-Control`과 별개로 응답 헤더로 쓰인다.
+
+### `ETag`
+
+HTTP 컨텐츠가 바뀌었는지 검사할 수 있는 태그로, 같은 위치의 자원이라도 컨텐츠가 달라졌다면 `ETag`는 달라진다. 만약 `ETag` 값이 바뀌면 응답 내용이 달라졌음을 알고 캐시를 지우고 새롭게 컨텐츠를 다운받게 된다.
+
+### `If-None-Match`
+
+`If-None-Match: W/"3bf2-wdj3VvN8/CvXVgafkI30/TyczHk"`
+
+서버에게 '`ETag`가 달라졌는지 검사해서 `ETag`가 다를 경우에만 컨텐츠를 새로 내려달라'고 하는 것이다. 만약 `ETag`가 같다면 서버는 `304 Not Modified`를 응답하여 캐시를 그대로 사용하게 한다.
+
+### 쿠키
+**브라우저에 저장되는 작은 데이터 조각**으로, 임시 데이터 보관 또는 웹페이지 개인화에 사용된다. 캐시를 주기적으로 지우지 않으면 특정 도메인마다 쌓인 쿠키가 사용자를 추적하게 된다.
+
+### `Set-Cookie`
+서버가 클라이언트에게 'A 쿠키랑 B 쿠키 저장해'처럼 특정 쿠키를 저장하라고 명령하는 **응답 헤더**다.
+
+`Set-Cookie: <key>=<value>; <options>` 형태로 작성한다.
+
+예를 들어 `Set-Cookie: id=kyw017763`은 id라는 key에 kyw017763이라는 값을 갖고 있다.
+
+옵션 종류
+- `Expires`: 쿠키 만료 날짜 지정
+- `Max-Age`: 쿠키 수명 지정. 만약 `Max-Age`가 지정되면 `Expires`는 무시된다.
+- `Secure`: HTTPS 에서만 쿠키가 전송된다.
+- `HttpOnly`: 자바스크립트에서 쿠키에 접근할 수 없다. XSS 요청을 막기 위해 활성화해두는 것이 좋다.
+- `Domain`: 도메인을 적어주면 해당 도메인과 일치하는 요청에만 쿠키가 전송된다. 도메인이 다른 쿠키는 써드 파티 쿠키로 사용자를 추적하기 위해 사용된다. Google, Facebook 등이 써드 파티 쿠키를 적극적으로 사용한다.
+
+`Set-Cookie: id=kyw017763; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly`
+
+### `Cookie`
+클라이언트가 서버에서 쿠키를 전달할 때 이 **요청 헤더**에 담는다.
+
+`Cookie: <key1>=<value1>; <key2>=<value2>`
+
+서버는 이 쿠키 헤더를 파싱해서 사용하며, 만약 쿠키를 사용하는 요청이라면 이를 검증하는 로직을 서버 단에 추가해야 한다. 
 
 ## HTTP X 헤더
 
