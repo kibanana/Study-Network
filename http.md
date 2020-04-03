@@ -27,6 +27,8 @@ Upgrade-Insecure-Requests: 1
 - 헤더: 두 번째 줄부터 시작. 요청에 대한 정보를 담고 있으며 헤더의 종류는 매우 많다.
 - 본문: 헤더에서 한 줄 띄고 본문 시작. 요청을 할 때 필요한 데이터를 담는 부분이다. HTTP Method가 `GET`, `DELETE`일 경우 해당 값은 비어있다.
 
+![image](https://user-images.githubusercontent.com/37951612/78396927-300c3880-762b-11ea-8a75-87533c9904b8.png)
+
 ### 응답 (Response)
 
 ```
@@ -44,6 +46,8 @@ Content-Type: text/html;
 - 시작줄: 첫줄. `HTTP/1.1`- HTTP 버전, `200`- HTTP 상태코드(Status Code), `OK`- HTTP 상태메시지
 - 헤더: 두번째 줄부터 시작. 응답에 대한 정보를 담고 있다.
 - 본문: 응답에는 보통 본문이 있으며, 요청한 데이터가 여기에 담긴다.
+
+![image](https://user-images.githubusercontent.com/37951612/78396917-2a165780-762b-11ea-977c-9df8f9072760.png)
 
 ## HTTP 메서드(Method)
 
