@@ -271,6 +271,53 @@ HTTP 컨텐츠가 바뀌었는지 검사할 수 있는 태그로, 같은 위치�
 
 ## HTTP X 헤더
 
+`X-`로 시작하는 헤더들은 예전에 **사용자가 임의로 헤더를 정의할 때** **사용자 정의 헤더**라는 것을 알려주기 위해 헤더 이름 앞에 `X-`
+를 붙이는 것에서 유래되었다. 하지만 2012년에 임의라는 의미가 사라졌다. 하지만 아직까지도 습관적으로 X를 앞에 붙이는 사람들이 많다.
+
+`X-`가 붙은 헤더 중 몇몇은 너무 널리 쓰이며 사실상 표준 헤더가 되기도 했다.
+
+### `X-Forwarded-For`, `X-Forwarded-Host`, `X-Forwarded-Proto`
+
+요청이 어떤 과정을 거쳐왔는지 알려주는 헤더다. 실제 서비스에는 `Client(Request) - Server(Response)` 같은 2단 구조보다는 `Client - 중계 서버 - 중계 서버 - 중계 서버 ··· 최종서버` 같은 다단 구조가 더 많다. 이 때 중계 서버를 거치면서 헤더들이 변조되고, 누가 요청을 보냈는지 애매해지기도 한다. 이 때 `X-Forwarded` 헤더 시리즈는 원래 요청의 주체가 누군지 알려준다(조작할 수 있으므로 완전히 믿지 말아야 한다).
+
+```
+X-Forwarded-For: 1.2.3.4, 5.6.7.8, 9.10.11.12
+X-Forwarded-Host: www.naver.com
+X-Forwarded-Proto: https
+```
+
+- `For`
+
+  현재까지 거친 서버의 IP 정보를 가지고 있다. 왼쪽 첫번째 IP가 본래 서버의 IP이고, 나머지는 중개 서버 IP가 된다.
+
+- `Host`
+
+  본래 서버의 호스트명
+
+- `Proto`
+
+  본래 서버의 프로토콜
+
+### `Forwarded`
+
+For, Host, Proto 헤더를 모두 처리할 수 있다.
+
+```
+Forwarded: for=1.2.3.4; host=www.naver.com; proto=https; by=5.6.7.8, 9.10.11.12
+```
+
+### `X-Frame-Options`
+frame, iframe, object 태그 내에서 페이지를 렌더링하는 것을 막는다. 내 사이트가 그런 기능을 제공하지 않으면 `X-Frame-Options: DENY`로 막아두는 게 보안에 좋다. 클릭재킹(clickjacking, 내가 누르고 있다고 인지하는 것과 실제로 눌리는 것이 다른 해킹 방법)을 막을 수 있다.
+
+- `X-Frame-Options: SAMEORIGIN` : 자신의 페이지를 불러오는 것을 허용한다
+- `X-Frame-Options: ALLOW-FROM <particular-http-url>` : 특정한 사이트를 불러오는 것만 허용한다
+
+### `X-Content-Type-Options`
+서버에서 보낸 `Content-Type` 헤더가 잘못 설정되었다고 생각하는 브라우저는 자체적으로 컨텐츠 타입을 추론한다.
+
+ex) 명백히 css 형식인 파일의 Content-Type 헤더가 text/html 인 경우, 브라우저가 text/css 로 추론할 수 있다.
+
+하지만 이런 임의적인 행동은 예상치 못한 행동이기 때문에 위험하다. 그럴 때 `X-Content-Type-Options: nosniff` 헤더를 서버에서 보내서 브라우저가 서버가 보낸 `Content-Type`을 따르도록 강제할 수 있다.
 
 ---
 
