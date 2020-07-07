@@ -576,3 +576,59 @@ SSL에서는 공개키 암호화 방식만을 사용하지 않는다. 왜냐하�
 - 데이터의 전송이 끝나면 SSL 통신이 끝났음을 서로에게 알린다.
 
 - 통신에서 사용한 대칭키인 세션키는 폐기한다.
+
+
+## CA 기관 비교
+- 글로벌사인(GlobalSign) 인증기관
+
+    2006년 10월 GMO 인터넷 그룹에 인수되어 디지털 인증서 시장에서 가장 경험이 풍부하고 높은 능력을 갖춘 인력들로 구성된 전문인증기관 입니다. 글로벌사인(GlobalSign)은 광범위한 인증기관 서비스를 수립하고 운영하는 책임을 수행하면서 기업방향의 혁신 및 고객중심의 새로운 서비스를 선보이고 있습니다. 기본으로 강제256bit의 인증서를 선보이면서 유럽시장 1위를 기록하고 있습니다.
+
+- 지오트러스트(GeoTrust) 인증기관
+
+    세계에서 3번째로 큰 인증기관이었으며, 2003년 베리사인(VeriSign)에 인수 합병 되어 베리사인(VeriSign)의 자회사로 편입 되어 있습니다.
+
+- COMODO CA 
+
+    1998년부터 웹사이트 및 웹 사용자가 인터넷을 안전하게 사용할 수 있도록 SSL인증서 및 테스크탑 보안 제품을 제공하고 있습니다. 현재 약 100만명의 고객을 유치하고 있으며, 세계 각국에 사무소를 두고있습니다.
+
+- 써트(Thawte) 인증기관
+
+    웹의 초기시절인 1997년부터 CA서비스를 전세계 최초로 실시한 인증기관으로 저렴한 가격과 간편한 기업확인 절차를 통해 인증서를 발급 하는 곳으로 유명 합니다.
+
+    1999년 12월에 베리사인(VeriSign)으로 인수 합병되면서 베리사인(VeriSign)의 자회사로 편입되었습니다. 중저가형에 속하는 써트(Thawte)인증서는 CodeSign 인증서와 함께 높은 판매율을 기록하고 있습니다.
+
+- VeriSign SSL인증서
+
+    높은 브랜드 인지도를 자랑하며, 1999년 Thawte INC.를, 2006년 하반기에 GeoTrust INC.를 인수 합병하였습니다. 철저한 인증심사로 높은 신뢰도를 주는 브랜드라는 장점을 가지고 있습니다.
+
+    2010년 Symantec 에 인수되어 VeriSign / GeoTrust / Thawte 모두 Symantec 계열사 입니다.
+
+- 금융결제원(KFTC)
+
+    우리나라 금융산업의 핵심 인프라인 지급결제시스템을 구축 운영함으로써 사원은행 및 이용고객에게 다양하고 편리한 지급결제서비스를 제공하는 전문기관입니다.
+
+    2008년 2월부터 Yessign 공인인증센터를 설립하여 운영함으로써, 국산 SSL 웹서버인증서 및 CodeSign 인증서를 발급하고 있으며, 2010년 부터 WildCard 및 Global인증서를 함께 판매하고 있습니다.
+
+## SSL 인증서 발급 호스팅 업체
+- https://www.securesign.kr/ 
+
+- https://www.qtrustssl.com/ 
+
+- https://sslhosting.gabia.com/ 
+
+- https://www.ucert.co.kr/index.html
+
+## 무료 SSL 인증서 발급 사이트
+1. Let’s Encrypt : https://letsencrypt.org/
+
+2. Comodo Free SSL : https://www.gogetssl.com/domain-validation/comodo-free-ssl/
+
+3. CloudFlare One-Click SSL : https://www.cloudflare.com/ssl/
+
+4. AWS Certificate Manager : https://aws.amazon.com/ko/certificate-manager/
+
+5. (귄장되지 않음) StartCom StartSSL : https://www.startssl.com/
+
+6. (권장되지 않음) self-signed 인증서
+
+OpenSSL을 이용해 자체적으로 루트 CA를 생성해서 self-signed 인증서를 발급받는 것
