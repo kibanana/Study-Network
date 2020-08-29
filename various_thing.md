@@ -16,7 +16,7 @@
 
 > 앞의 글만 읽어봐서는 단점이 많아보이는데, 왜 브로드캐스트를 이용할까?  
   만약 Destination PC의 MAC Address는 모르고 IP 주소만 알고있을 때, Destination PC의 MAC Address를 알기 위해 브로드캐스트를 알린다. 즉, 네트워크 안에서 **"여기 이런 IP주소 가진 PC 있으면 알려줘!"** 라고 외친다. 그럼 해당 PC의 MAC Address를 전달받을 수 있다.  
-  IP 주소를 MAC 주소로 바꾸는 과정, 얻어내는 과정을 **ARP(Address Resolution Protocol)**이라고 하며, 그 외에도 서버가 다수의 클라이언트에게 서비스하기 위해 브로드캐스트를 사용하기도 한다.
+  IP 주소를 MAC 주소로 바꾸는 과정, 얻어내는 과정을 **ARP(Address Resolution Protocol)** 이라고 하며, 그 외에도 서버가 다수의 클라이언트에게 서비스하기 위해 브로드캐스트를 사용하기도 한다.
 
 ## 멀티캐스트
 <img src="https://user-images.githubusercontent.com/37951612/78057046-0ea81400-73c1-11ea-9298-54d41ba9cb70.png" width="300" height="200">
